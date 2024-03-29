@@ -84,7 +84,8 @@ router.post('/', async (req, res) => {
 
 const udpateTaskSchema = z.object({
     title: z.string().max(60).optional(),
-    description: z.string().max(150).optional()
+    description: z.string().max(150).optional(), 
+    done: z.boolean().optional()
 })
     
 // use middleware that checks if the task with id exists or not
@@ -108,7 +109,8 @@ router.put('/:id', checkTaskExists, async (req, res) => {
                 id: todoId
             }, data: {
                 title: body.title,
-                description: body.description
+                description: body.description,
+                done: body.done
             }
         })
         res.json({

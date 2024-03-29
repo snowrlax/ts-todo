@@ -4,6 +4,6 @@ export const router = express.Router();
 router.use('/todo', todoRouter);
 router.get('/', (req, res) => {
     res.json({
-        msg: "server is healthy"
+        msg: "server is healthy asf"
     });
 });

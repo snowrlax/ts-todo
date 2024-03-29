@@ -7,6 +7,6 @@ router.use('/todo', todoRouter)
 
 router.get('/', (req: Request, res: Response) => {
     res.json({
-        msg: "server is healthy"
+        msg: "server is healthy asf"
     })
 })
