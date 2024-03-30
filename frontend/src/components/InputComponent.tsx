@@ -6,7 +6,8 @@ export const InputComponent = () => {
         title: "",
         description: ""
     })
-     
+
+         
     return <div className="w-full">
         <div className="mb-3">
             <input type="text" onChange={(e) => {
@@ -24,7 +25,7 @@ export const InputComponent = () => {
         </div>
         <div className="">
             <button onClick={ async() => {
-                const response = await axios.post('https://ts-todo-w23m.onrender.com', {
+                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/todo`, {
                     data: inputs
                 })
                 

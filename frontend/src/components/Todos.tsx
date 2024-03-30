@@ -2,20 +2,27 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Todo } from "./Todo"
 
-async function getTodos() {
-    const res = await axios.get("https://ts-todo-w23m.onrender.com/app/todo")
-    console.log(res)
-    return res
-}
+
 
 export const Todos = () => {
-    const [Todos, setTodos] = useState([])
+    const [todos, setTodos] = useState([])
+
+    async function getTodos() {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/todo`)
+            .then(response => setTodos(response.data.response))
+    }
 
     useEffect(() => {
         getTodos()
     }, [])
-    
+
     return <div className="">
-        <Todo id={"1"} title={"test title"} description={"test description"} done={true} />
+        {
+            todos?.map(todo => (
+                // @ts-ignore
+                <Todo key={todo.id} id={todo.id} title={todo.title} description={todo.description} done={todo.done} />
+            ))
+        }
+
     </div>
 }

@@ -2,37 +2,38 @@ import axios from "axios"
 import { useState } from "react"
 
 export const Todo = ({ id, title, description, done }: { id: string, title: string, description: string, done: boolean }) => {
+
     const [completed, setCompleted] = useState(done)
-    const [updatedInputs, setUpdatedInputs] = useState({
-        title: "",
-        description: ""
-    })
+    const [todoTitle, setTodoTitle] = useState(title);
+    const [todoDescription, setTodoDescription] = useState(description);
+
+   
     return <div className="">
         <div className="flex justify-center">
             <input onChange={(e) => {
-                setUpdatedInputs({
-                    ...updatedInputs, title: e.target.value
-                })
-            }} type="text" value={title} />
+                setTodoTitle(e.target.value);
+            }} type="text" value={todoTitle} />
+
             <input onChange={(e) => {
-                setUpdatedInputs({
-                    ...updatedInputs, description: e.target.value
-                })
-            }} type="text" value={description} />
+                setTodoDescription(e.target.value)
+            }} type="text" value={todoDescription} />
         </div>
+
         <button onClick={() => {
             setCompleted(completed!)
-            axios.put(`https://ts-todo-w23m.onrender.com/app/todos/${id}`, {
+            axios.put(`${import.meta.env.VITE_BACKEND_URL}/todo/${id}`, {
                 data: {
                     done: completed
                 }
             })
         }} className="">{done ? "Done" : "Not Done"}</button>
+
         <button onClick={() => {
             setCompleted(completed!)
-            axios.put(`https://ts-todo-w23m.onrender.com/app/todos/${id}`, {
+            axios.put(`${import.meta.env.VITE_BACKEND_URL}/todo/${id}`, {
                 data: {
-                    done: completed
+                    title: todoTitle,
+                    description: todoDescription
                 }
             })
         }} className="">update</button>
