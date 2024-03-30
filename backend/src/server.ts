@@ -4,6 +4,8 @@ import { router as rootRouter } from './routes/index.js'
 
 
 const app = express()
+
+app.use(cors())
 app.use(express.json())
 
 
