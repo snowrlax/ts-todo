@@ -54,21 +54,21 @@ const newTaskSchema = z.object({
 // use Middleware here
 router.post('/', async (req, res) => {
     const body = req.body
-
+    console.log(req.body)
     // zod input validation
-    const { success } = newTaskSchema.safeParse(body)
+    const { success } = newTaskSchema.safeParse(body.data)
 
     if (!success) {
         return res.json({
-            message: "Invalid inputs"
+            message: "Invalid inputs while creating todo"
         })
     }
 
     try {
         const response = await prisma.task.create({
             data: {
-                title: body.title,
-                description: body.description
+                title: body.data.title,
+                description: body.data.description
             }
         })
         res.json({
@@ -94,7 +94,7 @@ router.put('/:id', checkTaskExists, async (req, res) => {
     const body = req.body
 
     // zod input validation
-    const { success } = udpateTaskSchema.safeParse(body)
+    const { success } = udpateTaskSchema.safeParse(body.data)
 
     if (!success) {
         return res.json({
@@ -108,9 +108,9 @@ router.put('/:id', checkTaskExists, async (req, res) => {
             where: {
                 id: todoId
             }, data: {
-                title: body.title,
-                description: body.description,
-                done: body.done
+                title: body.data.title,
+                description: body.data.description,
+                done: body.data.done
             }
         })
         res.json({

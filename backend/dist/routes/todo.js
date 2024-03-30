@@ -57,18 +57,19 @@ const newTaskSchema = z.object({
 // use Middleware here
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
+    console.log(req.body);
     // zod input validation
-    const { success } = newTaskSchema.safeParse(body);
+    const { success } = newTaskSchema.safeParse(body.data);
     if (!success) {
         return res.json({
-            message: "Invalid inputs"
+            message: "Invalid inputs while creating todo"
         });
     }
     try {
         const response = yield prisma.task.create({
             data: {
-                title: body.title,
-                description: body.description
+                title: body.data.title,
+                description: body.data.description
             }
         });
         res.json({
@@ -84,14 +85,15 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 const udpateTaskSchema = z.object({
     title: z.string().max(60).optional(),
-    description: z.string().max(150).optional()
+    description: z.string().max(150).optional(),
+    done: z.boolean().optional()
 });
 // use middleware that checks if the task with id exists or not
 router.put('/:id', checkTaskExists, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const todoId = req.params.id;
     const body = req.body;
     // zod input validation
-    const { success } = udpateTaskSchema.safeParse(body);
+    const { success } = udpateTaskSchema.safeParse(body.data);
     if (!success) {
         return res.json({
             message: "Invalid inputs"
@@ -102,8 +104,9 @@ router.put('/:id', checkTaskExists, (req, res) => __awaiter(void 0, void 0, void
             where: {
                 id: todoId
             }, data: {
-                title: body.title,
-                description: body.description
+                title: body.data.title,
+                description: body.data.description,
+                done: body.data.done
             }
         });
         res.json({
