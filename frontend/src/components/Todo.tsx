@@ -8,7 +8,7 @@ export const Todo = ({ id, title, description, done }: { id: string, title: stri
     const [todoDescription, setTodoDescription] = useState(description);
 
    
-    return <div className="">
+    return <div className="flex ">
         <div className="flex justify-center">
             <input onChange={(e) => {
                 setTodoTitle(e.target.value);
