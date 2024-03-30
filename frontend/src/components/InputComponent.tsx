@@ -25,7 +25,7 @@ export const InputComponent = () => {
         </div>
         <div className="">
             <button onClick={ async() => {
-                const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/todo`, {
+                await axios.post(`${import.meta.env.VITE_BACKEND_URL}/todo`, {
                     data: inputs
                 })
                 
